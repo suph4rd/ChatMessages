@@ -141,4 +141,5 @@ cython_debug/
 
 
 messages/local_settings.py
+.idea/
 
