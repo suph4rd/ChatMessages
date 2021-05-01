@@ -1,14 +1,11 @@
 from rest_framework.routers import DefaultRouter
 from django.conf.urls import url, include
-
-from .views import MessagesSendViewSet, MessagesViewSet, UserViewSet
+from . import views
 
 router = DefaultRouter()
-router.register(r'messages/send', MessagesSendViewSet, basename='messages_send')
-router.register(r'messages', MessagesViewSet, basename='messages-watch')
-router.register(r'users', UserViewSet, basename='users')
+router.register(r'messages', views.MessagesViewSet, basename='messages-watch')
+router.register(r'users', views.UserViewSet, basename='users')
 
 urlpatterns = [
-    url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'', include(router.urls)),
 ]
