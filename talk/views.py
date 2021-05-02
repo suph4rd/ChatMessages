@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from django.contrib.auth.models import User
@@ -10,6 +11,8 @@ from rest_framework.decorators import action
 class MessagesViewSet(viewsets.ModelViewSet):
     queryset = models.Messages.objects.all()
     serializer_class = serializers.MessagesSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['target', 'author']
 
     def retrieve(self, request, *args, **kwargs):
         if not request.user.is_staff:
@@ -19,7 +22,6 @@ class MessagesViewSet(viewsets.ModelViewSet):
     def list(self, request, *args, **kwargs):
         if not request.user.is_staff:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-        print(123)
         return super().list(request, *args, **kwargs)
 
     @action(methods=['get'], detail=False)
